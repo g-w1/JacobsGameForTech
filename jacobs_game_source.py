@@ -71,7 +71,7 @@ lvl_4 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [dirt,dirt,dirt,(0,),(0,),(0,),(0,),(0,),dirt,dirt],
          [dirt,dirt,dirt,lava,lava,lava,lava,lava,dirt,dirt]]
 monkey = pygame.image.load("monkey3.png").convert_alpha()
-bear1 = pygame.image.load("beargd2.png").convert_alpha()
+player1 = pygame.image.load("playergd2.png").convert_alpha()
 start_screen = pygame.image.load("startscreen.png").convert()
 instructions = pygame.image.load("instructions.png").convert()
 cutscene = pygame.image.load("cutscene2.png").convert()
@@ -210,6 +210,7 @@ while run_inst:
         run_inst = False
     pygame.display.update()
 #cutscene
+pygame.music.mixer.play(-1)
 while run_cutscene:
     pygame.time.delay(100)
     for event in pygame.event.get():
@@ -227,76 +228,79 @@ while run_cutscene:
     if pressed_key[pygame.K_SPACE]:
         run_cutscene= False
     pygame.display.update()
-#stuff for level 1
-bear = player(2,300,bear1)
-pygame.mixer.music.play(-1)
-for ypos in range(0,10):
-    for xpos in range(0,10):
-        if lvl_1[ypos][xpos]!= (0,):
-            tiles.append(Tile(50*xpos,50*ypos,lvl_1[ypos][xpos]))
-#game loop for level 1 start
-while run_lvl_1:
-    print(bear.collision_1())
-    bear.rec = pygame.Rect((bear.x,bear.y,bear.width,bear.height))
-    if bear.rec.colliderect(pygame.Rect(400,5,76,100)):
-            run_lvl_1=False
-    pygame.time.delay(frame_rate)
-    bear.did_die()
-    bear.gravity(.1)
-    bear.collison()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run_start = False
-            run_inst = False
-            run_lvl_1 = False
-            run_lvl_2 = False
-            run_lvl_3 = False
-            run_lvl_4 = False
-            run_cutscene = False
-            gameover = False
+#level function
+def level(player, lvl_, image_of_player,person_to_be_saved):
+    global run_start
+    global run_inst
+    global run_lvl_1
+    global run_lvl_2
+    global run_lvl_3
+    global run_lvl_4
+    global run_cutscene
+    global gameover
+    global run_cutscene
+    global frame_rate
+    global bear1
+    global monkey
+    tiles = []
+    for ypos in range(0,10):
+        for xpos in range(0,10):
+            if lvl_1[ypos][xpos]!= (0,):
+            tiles.append(Tile(50*xpos,50*ypos,lvl_[ypos][xpos]))  
 
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and bear.x > bear.vel: 
-        bear.x -= bear.vel
-        '''for tile in tiles:
-          if bear.rect.colliderect(tile.rect):
-              bear.x = tile.x+50'''
-    if keys[pygame.K_RIGHT] and bear.x < 500 - bear.vel - bear.width:  
-        bear.x += bear.vel
-        '''for tile in tiles:
-          if bear.rect.colliderect(tile.rect):
-              bear.x = tile.x-bear.width'''
-    if bear.isJump==False: 
-      
-        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and bear.collision_1():
-            bear.isJump = True
-            bear.y-=1
-    else:
-        if bear.jumpCount >= bear.collision_1():
-            bear.y -= (bear.jumpCount * abs(bear.jumpCount)) * 0.5
-            bear.jumpCount -= 1
-        else: 
-            bear.jumpCount = 8
-            bear.jumpCountG = bear.jumpCount
-            bear.isJump = False
-    
-    win.fill((50,0,200))
-    for tile in tiles:
-        pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
-    win.blit(bear1,(bear.x,bear.y))
-    bear.did_die()
-    win.blit(monkey,(400,5))
-    win.blit(textsurface,(300,0))
-    pygame.display.update()
-#game loop for level 1 end
-#stuff for level 2
-rhino = player(2,330,rhino1)
-tiles = []
-for ypos in range(0,10):
-    for xpos in range(0,10):
-        if lvl_2[ypos][xpos]!= (0,):
-            tiles.append(Tile(50*xpos,50*ypos,lvl_2[ypos][xpos]))
+    while lvl_:
+        print(player.collision_1())
+        player.rec = pygame.Rect((player.x,player.y,player.width,player.height))
+        if player.rec.colliderect(pygame.Rect(400,5,76,100)):
+                run_lvl_1=False
+        pygame.time.delay(frame_rate)
+        player.did_die()
+        player.gravity(.1)
+        player.collison()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run_start = False
+                run_inst = False
+                run_lvl_1 = False
+                run_lvl_2 = False
+                run_lvl_3 = False
+                run_lvl_4 = False
+                run_cutscene = False
+                gameover = False
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] and player.x > player.vel: 
+            player.x -= player.vel
+        if keys[pygame.K_RIGHT] and player.x < 500 - player.vel - player.width:  
+            player.x += player.vel
+        if player.isJump==False: 
+            if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and player.collision_1():
+                player.isJump = True
+                player.y-=1
+        else:
+            if player.jumpCount >= player.collision_1():
+                player.y -= (player.jumpCount * abs(player.jumpCount)) * 0.5
+                player.jumpCount -= 1
+            else: 
+                player.jumpCount = 8
+                player.jumpCountG = player.jumpCount
+                player.isJump = False
+        
+        win.fill((50,0,200))
+        for tile in tiles:
+            pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
+        win.blit(image_of_player,(player.x,player.y))
+        player.did_die()
+        win.blit(person_to_be_saved,(400,5))
+        win.blit(textsurface,(300,0))
+        pygame.display.update()
+    #game loop for level 1 end
+    #stuff for level 2
+    '''rhino = player(2,330,rhino1)
+    tiles = []
+    for ypos in range(0,10):
+        for xpos in range(0,10):
+            if lvl_2[ypos][xpos]!= (0,):
+                tiles.append(Tile(50*xpos,50*ypos,lvl_2[ypos][xpos]))
 #game loop for level 2 start
 while run_lvl_2:
     print(rhino.y)
@@ -411,7 +415,7 @@ while run_lvl_3:
     win.blit(ant1,(400,5))
     win.blit(textsurface,(300,0))
     pygame.display.update()
-#game loop for level 3 end
+#game loop for level 3 end'''
 while gameover == True:
     win.blit(gameover1, (0,0))
     pygame.display.update()
