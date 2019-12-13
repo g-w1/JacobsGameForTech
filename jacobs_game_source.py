@@ -106,6 +106,7 @@ class player(object):
                     return True
             else:return False
     def collison(self):
+        global tiles
         self.rec = pygame.Rect(self.x,self.y,self.width,self.height)
         for tile in tiles:
             if self.rec.colliderect(pygame.Rect(tile.x,tile.y-1,50,51)):
