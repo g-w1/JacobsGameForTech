@@ -269,7 +269,7 @@ while run_lvl_1:
               bear.x = tile.x-bear.width'''
     if bear.isJump==False: 
       
-        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and bear.collision_1():
+        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and not(bear.collision_1()):
             bear.isJump = True
             bear.y-=1
     else:
