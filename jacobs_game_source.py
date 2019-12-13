@@ -71,7 +71,7 @@ lvl_4 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [dirt,dirt,dirt,(0,),(0,),(0,),(0,),(0,),dirt,dirt],
          [dirt,dirt,dirt,lava,lava,lava,lava,lava,dirt,dirt]]
 monkey = pygame.image.load("monkey3.png").convert_alpha()
-player1 = pygame.image.load("playergd2.png").convert_alpha()
+bear1 = pygame.image.load("beargd2.png").convert_alpha()
 start_screen = pygame.image.load("startscreen.png").convert()
 instructions = pygame.image.load("instructions.png").convert()
 cutscene = pygame.image.load("cutscene2.png").convert()
@@ -210,7 +210,7 @@ while run_inst:
         run_inst = False
     pygame.display.update()
 #cutscene
-pygame.music.mixer.play(-1)
+pygame.mixer.music.play(-1)
 while run_cutscene:
     pygame.time.delay(100)
     for event in pygame.event.get():
@@ -229,7 +229,7 @@ while run_cutscene:
         run_cutscene= False
     pygame.display.update()
 #level function
-def level(player, lvl_, image_of_player,person_to_be_saved):
+def level(player, lvl_,run_lvl, image_of_player,person_to_be_saved):
     global run_start
     global run_inst
     global run_lvl_1
@@ -246,10 +246,9 @@ def level(player, lvl_, image_of_player,person_to_be_saved):
     for ypos in range(0,10):
         for xpos in range(0,10):
             if lvl_1[ypos][xpos]!= (0,):
-            tiles.append(Tile(50*xpos,50*ypos,lvl_[ypos][xpos]))  
+                tiles.append(Tile(50*xpos,50*ypos,lvl_[ypos][xpos]))  
 
-    while lvl_:
-        print(player.collision_1())
+    while run_lvl:
         player.rec = pygame.Rect((player.x,player.y,player.width,player.height))
         if player.rec.colliderect(pygame.Rect(400,5,76,100)):
                 run_lvl_1=False
@@ -293,9 +292,10 @@ def level(player, lvl_, image_of_player,person_to_be_saved):
         win.blit(person_to_be_saved,(400,5))
         win.blit(textsurface,(300,0))
         pygame.display.update()
+level(player(5,330,bear1),lvl_1,run_lvl_1,bear1,monkey)
     #game loop for level 1 end
     #stuff for level 2
-    '''rhino = player(2,330,rhino1)
+'''rhino = player(2,330,rhino1)
     tiles = []
     for ypos in range(0,10):
         for xpos in range(0,10):
