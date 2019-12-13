@@ -80,6 +80,8 @@ gameover1 = pygame.image.load("gameover.png").convert()
 rhino1 = pygame.image.load("rhino3.png").convert_alpha()
 ant1 = pygame.image.load("ant3.png").convert_alpha()
 lion1 = pygame.image.load("lion3.png").convert_alpha()
+cutscene2 = pygame.image.load("cutscene2.png").convert()
+win_scr = pygame.image.load("win_screen.png").convert()
 pygame.mixer.music.load("music.mp3")
 pygame.mixer.music.set_volume(0.5)
 
