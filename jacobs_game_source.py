@@ -1,9 +1,5 @@
 #module setup
 import pygame, os, sys
-def restart_program():
-    """Restarts the current program.
-    Note: this function does not return. Any cleanup action (like
-    saving data) must be done before calling this function."""
 pygame.mixer.pre_init(44100,16,2,4096)    
 pygame.init()
 pygame.font.init()
@@ -30,6 +26,8 @@ run_lvl_3 = True
 run_lvl_4 = True
 gameover = True
 run_cutscene = True
+asdf = True
+able = True
 lvl_1 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
@@ -109,6 +107,8 @@ class player(object):
             else:return False
     def collison(self):
         global tiles
+        global able
+        global adsf
         self.rec = pygame.Rect(self.x,self.y,self.width,self.height)
         for tile in tiles:
             if self.rec.colliderect(pygame.Rect(tile.x,tile.y-1,50,51)):
@@ -116,8 +116,10 @@ class player(object):
                 self.isJump=False
                 self.grav = 0
                 self.colli = False
+                able = False
             else:
                 self.colli = True
+                able = True
         for tile in tiles:
             if self.rect.colliderect(tile.rect):
                 pass
@@ -126,8 +128,11 @@ class player(object):
         if self.rec.colliderect(pygame.Rect(400,5,76,100)):
             level=False
     def gravity(self, accel):
+        global able
         if colli == False and self.isJump == False:
             self.y -= self.velo
+            able = False
+            
             '''if self.velo<=25:
                 self.velo -= accel'''
     def did_die(self):
@@ -232,14 +237,13 @@ while run_cutscene:
     pygame.display.update()
 #stuff for level 1
 bear = player(2,300,bear1)
-pygame.mixer.music.play(-1)
+#pygame.mixer.music.play(-1)
 for ypos in range(0,10):
     for xpos in range(0,10):
         if lvl_1[ypos][xpos]!= (0,):
             tiles.append(Tile(50*xpos,50*ypos,lvl_1[ypos][xpos]))
 #game loop for level 1 start
 while run_lvl_1:
-    print(bear.collision_1())
     bear.rec = pygame.Rect((bear.x,bear.y,bear.width,bear.height))
     if bear.rec.colliderect(pygame.Rect(400,5,76,100)):
             run_lvl_1=False
@@ -272,17 +276,19 @@ while run_lvl_1:
               bear.x = tile.x-bear.width'''
     if bear.isJump==False: 
       
-        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and not(bear.collision_1()):
+        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
             bear.isJump = True
             bear.y-=1
     else:
         if bear.jumpCount >= bear.collision_1():
             bear.y -= (bear.jumpCount * abs(bear.jumpCount)) * 0.5
             bear.jumpCount -= 1
+            able = False
         else: 
             bear.jumpCount = 8
             bear.jumpCountG = bear.jumpCount
             bear.isJump = False
+            able = True
     
     win.fill((50,0,200))
     for tile in tiles:
@@ -302,7 +308,7 @@ for ypos in range(0,10):
             tiles.append(Tile(50*xpos,50*ypos,lvl_2[ypos][xpos]))
 #game loop for level 2 start
 while run_lvl_2:
-    print(rhino.y)
+    print(rhino.jumpCount)
     rhino.rec = pygame.Rect((rhino.x,rhino.y,rhino.width,rhino.height))
     if rhino.rec.colliderect(pygame.Rect(400,5,76,100)):
         run_lvl_2=False
