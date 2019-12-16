@@ -28,6 +28,7 @@ gameover = True
 run_cutscene = True
 asdf = True
 able = True
+winscreen4 = True
 lvl_1 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
@@ -237,7 +238,7 @@ while run_cutscene:
     pygame.display.update()
 #stuff for level 1
 bear = player(2,300,bear1)
-#pygame.mixer.music.play(-1)
+pygame.mixer.music.play(-1)
 for ypos in range(0,10):
     for xpos in range(0,10):
         if lvl_1[ypos][xpos]!= (0,):
@@ -421,6 +422,21 @@ while run_lvl_3:
     win.blit(textsurface,(300,0))
     pygame.display.update()
 #game loop for level 3 end
+if lion.health!=0:
+    while winscreen4:
+        win.blit(win_scr, (0,0))
+        pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run_start = False
+            run_inst = False
+            run_lvl_1 = False
+            run_lvl_2 = False
+            run_lvl_3 = False
+            run_lvl_4 = False
+            run_cutscene = False
+            gameover = False
+            winscreen4 = False
 while gameover == True:
     win.blit(gameover1, (0,0))
     pygame.display.update()
