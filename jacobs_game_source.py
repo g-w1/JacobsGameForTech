@@ -64,10 +64,10 @@ lvl_4 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-        [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),grass,grass],
+         [grass,(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
+         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
+        [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
+         [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [dirt,dirt,dirt,(0,),(0,),(0,),(0,),(0,),dirt,dirt],
          [dirt,dirt,dirt,lava,lava,lava,lava,lava,dirt,dirt]]
 monkey = pygame.image.load("monkey3.png").convert_alpha()
@@ -438,8 +438,9 @@ while run_lvl_3:
     win.blit(ant1,(400,5))
     win.blit(textsurface,(300,0))
     pygame.display.update()
+#setup for level 4
 tiles = []
-ant = player(2,300,ant1)
+ant = player(2,250,ant1)
 for ypos in range(0,10):
     for xpos in range(0,10):
         if lvl_4[ypos][xpos]!= (0,):
@@ -490,7 +491,7 @@ while run_lvl_4:
         able = True
     if asdf!= ant.y or (prev != ant.isJump):
         able = False
-    win.fill((50,0,200))
+    win.fill((200,200,200))
     for tile in tiles:
         pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
     win.blit(ant1,(ant.x,ant.y))
@@ -500,7 +501,7 @@ while run_lvl_4:
     pygame.display.update()
 #game loop for level 4 end
 #game loop for level 3 end
-if ant.health!=0 and bear.health!=0 and rhino.health!=0 and ant.health!=0:
+if lion.health!=0 and bear.health!=0 and rhino.health!=0 and ant.health!=0:
     while winscreen4:
         win.blit(win_scr, (0,0))
         pygame.display.update()
