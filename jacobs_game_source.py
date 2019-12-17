@@ -6,7 +6,7 @@ pygame.font.init()
 #variable setup        
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
 textsurface = myfont.render('Save Me', False, (0, 0, 0))
-frame_rate = 15
+frame_rate = 25
 colli = False
 tiles = []
 win = pygame.display.set_mode((500,500))
@@ -53,8 +53,8 @@ lvl_2 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
 lvl_3 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
-        [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [(0,),(0,),(0,),(0,),(0,),platform,(0,),(0,),bark,(0,)],
+        [(0,),(0,),(0,),(0,),(0,),platform,(0,),(0,),bark,(0,)],
+         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),grass,grass],
@@ -256,7 +256,6 @@ for ypos in range(0,10):
 bear.rec = pygame.Rect((bear.x,bear.y,bear.width,bear.height))
 #game loop for level 1 start
 while run_lvl_1:
-    print(bear.isJump, bear.jumpCount)
     if bear.rec.colliderect(pygame.Rect(400,5,76,100)):
             run_lvl_1=False
     pygame.time.delay(frame_rate)
@@ -440,21 +439,21 @@ while run_lvl_3:
     win.blit(textsurface,(300,0))
     pygame.display.update()
 #game loop for level 3 end
-if lion.health!=0:
+if lion.health!=0 and bear.health!=0 and rhino.health!=0:
     while winscreen4:
         win.blit(win_scr, (0,0))
         pygame.display.update()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run_start = False
-            run_inst = False
-            run_lvl_1 = False
-            run_lvl_2 = False
-            run_lvl_3 = False
-            run_lvl_4 = False
-            run_cutscene = False
-            gameover = False
-            winscreen4 = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run_start = False
+                run_inst = False
+                run_lvl_1 = False
+                run_lvl_2 = False
+                run_lvl_3 = False
+                run_lvl_4 = False
+                run_cutscene = False
+                gameover = False
+                winscreen4 = False
 while gameover == True:
     win.blit(gameover1, (0,0))
     pygame.display.update()
