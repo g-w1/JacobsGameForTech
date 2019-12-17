@@ -6,7 +6,7 @@ pygame.font.init()
 #variable setup        
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
 textsurface = myfont.render('Save Me', False, (0, 0, 0))
-frame_rate = 100
+frame_rate = 15
 colli = False
 tiles = []
 win = pygame.display.set_mode((500,500))
@@ -42,7 +42,7 @@ lvl_1 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [dirt,dirt,dirt,dirt,lava,lava,dirt,dirt,dirt,dirt]]
 lvl_2 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
-        [(0,),(0,),(0,),(0,),platform,(0,),(0,),leaf,(0,),leaf],
+        [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,),leaf],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [(0,),(0,),platform,(0,),(0,),platform,(0,),(0,),bark,(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
@@ -54,7 +54,7 @@ lvl_3 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
+         [(0,),(0,),(0,),(0,),(0,),platform,(0,),(0,),bark,(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),grass,grass],
@@ -187,6 +187,8 @@ class Tile(object):
         self.height=50
         self.rgb=rgb
         self.rect = pygame.Rect(xpos, ypos, 50,50)
+lion = player(2,330,lion1)
+lion.health = 0
 #start screen
 while run_start:
     pygame.time.delay(50)
@@ -320,6 +322,8 @@ while run_lvl_2:
     if rhino.rec.colliderect(pygame.Rect(400,5,76,100)):
         run_lvl_2=False
     pygame.time.delay(frame_rate)
+    asdf = rhino.y
+    prev = rhino.isJump
     rhino.did_die()
     rhino.gravity(.1)
     rhino.collison()
@@ -346,7 +350,7 @@ while run_lvl_2:
         
     if rhino.isJump==False: 
       
-        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and (rhino.isJump == False and rhino.colli == True):
+        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able:
             rhino.isJump = True
             rhino.y-=1
     else:
@@ -357,7 +361,10 @@ while run_lvl_2:
             rhino.jumpCount = 8
             rhino.jumpCountG = rhino.jumpCount
             rhino.isJump = False
-    
+    if asdf == rhino.y and rhino.jumpCount:
+        able = True
+    if asdf!= rhino.y or (prev != rhino.isJump):
+        able = False
     win.fill((100,0,200))
     for tile in tiles:
         pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
@@ -368,7 +375,7 @@ while run_lvl_2:
     pygame.display.update()
 #game loop for level 2 end
 #stuff for level 3
-lion = player(2,330,lion1)
+lion.health = 3
 tiles = []
 for ypos in range(0,10):
     for xpos in range(0,10):
@@ -382,6 +389,8 @@ while run_lvl_3:
            gameover = False
 
     pygame.time.delay(frame_rate)
+    asdf = lion.y
+    prev = lion.isJump
     lion.did_die()
     lion.gravity(.1)
     lion.collison()
@@ -407,7 +416,7 @@ while run_lvl_3:
         
     if lion.isJump==False: 
       
-        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and (lion.isJump == False and lion.collision_1):
+        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able:
             lion.isJump = True
             lion.y-=1
     else:
@@ -418,7 +427,10 @@ while run_lvl_3:
             lion.jumpCount = 8
             lion.jumpCountG = lion.jumpCount
             lion.isJump = False
-    
+    if asdf == lion.y and lion.jumpCount:
+        able = True
+    if asdf!= lion.y or (prev != lion.isJump):
+        able = False
     win.fill((100,0,200))
     for tile in tiles:
         pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
