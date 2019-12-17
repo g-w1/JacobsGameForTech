@@ -6,7 +6,7 @@ pygame.font.init()
 #variable setup        
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
 textsurface = myfont.render('Save Me', False, (0, 0, 0))
-frame_rate=30
+frame_rate = 100
 colli = False
 tiles = []
 win = pygame.display.set_mode((500,500))
@@ -115,11 +115,12 @@ class player(object):
             if self.rec.colliderect(pygame.Rect(tile.x,tile.y-1,50,51)):
                 asdf = self.y
                 self.y=tile.y-self.height
-                print(able)
                 if asdf == self.y:
-                    able = True
+                    #able = True
+                    pass
                 else:
-                    able = False
+                    #able = False
+                    pass
                 self.isJump=False
                 self.grav = 0
                 self.colli = False
@@ -138,7 +139,7 @@ class player(object):
         global able
         if colli == False and self.isJump == False:
             self.y -= self.velo
-            able = False
+            #able = False
             
             '''if self.velo<=25:
                 self.velo -= accel'''
@@ -249,15 +250,18 @@ for ypos in range(0,10):
     for xpos in range(0,10):
         if lvl_1[ypos][xpos]!= (0,):
             tiles.append(Tile(50*xpos,50*ypos,lvl_1[ypos][xpos]))
+bear.rec = pygame.Rect((bear.x,bear.y,bear.width,bear.height))
 #game loop for level 1 start
 while run_lvl_1:
-    bear.rec = pygame.Rect((bear.x,bear.y,bear.width,bear.height))
+    print(bear.isJump, bear.jumpCount)
     if bear.rec.colliderect(pygame.Rect(400,5,76,100)):
             run_lvl_1=False
     pygame.time.delay(frame_rate)
+    asdf = bear.y
     bear.did_die()
     bear.gravity(.1)
     bear.collison()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run_start = False
@@ -273,31 +277,25 @@ while run_lvl_1:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and bear.x > bear.vel: 
         bear.x -= bear.vel
-        '''for tile in tiles:
-          if bear.rect.colliderect(tile.rect):
-              bear.x = tile.x+50'''
     if keys[pygame.K_RIGHT] and bear.x < 500 - bear.vel - bear.width:  
         bear.x += bear.vel
-        '''for tile in tiles:
-          if bear.rect.colliderect(tile.rect):
-              bear.x = tile.x-bear.width'''
     if bear.isJump==False: 
       
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
             bear.isJump = True
             bear.y-=1
-            able = False
     else:
         if bear.jumpCount >= bear.collision_1():
             bear.y -= (bear.jumpCount * abs(bear.jumpCount)) * 0.5
             bear.jumpCount -= 1
-            able = False
         else: 
             bear.jumpCount = 8
             bear.jumpCountG = bear.jumpCount
             bear.isJump = False
-            able = True
-    
+    if asdf == bear.y and bear.jumpCount:
+        able = True
+    if asdf!= bear.y or (bear.jumpCount == 8 and bear.isJump == True):
+        able = False
     win.fill((50,0,200))
     for tile in tiles:
         pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
@@ -316,7 +314,6 @@ for ypos in range(0,10):
             tiles.append(Tile(50*xpos,50*ypos,lvl_2[ypos][xpos]))
 #game loop for level 2 start
 while run_lvl_2:
-    print(rhino.jumpCount)
     rhino.rec = pygame.Rect((rhino.x,rhino.y,rhino.width,rhino.height))
     if rhino.rec.colliderect(pygame.Rect(400,5,76,100)):
         run_lvl_2=False
