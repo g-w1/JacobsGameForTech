@@ -354,7 +354,7 @@ while run_lvl_2:
             rhino.isJump = True
             rhino.y-=1
     else:
-        if rhino.jumpCount >= -1*rhino.jumpCountG:
+        if rhino.jumpCount >= rhino.collision_1():
             rhino.y -= (rhino.jumpCount * abs(rhino.jumpCount)) * 0.5
             rhino.jumpCount -= 1
         else: 
@@ -420,7 +420,7 @@ while run_lvl_3:
             lion.isJump = True
             lion.y-=1
     else:
-        if lion.jumpCount >= -1*lion.jumpCountG:
+        if lion.jumpCount >= lion.collision_1():
             lion.y -= (lion.jumpCount * abs(lion.jumpCount)) * 0.5
             lion.jumpCount -= 1
         else: 
