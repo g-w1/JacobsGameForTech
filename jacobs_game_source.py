@@ -113,14 +113,20 @@ class player(object):
         self.rec = pygame.Rect(self.x,self.y,self.width,self.height)
         for tile in tiles:
             if self.rec.colliderect(pygame.Rect(tile.x,tile.y-1,50,51)):
+                asdf = self.y
                 self.y=tile.y-self.height
+                print(able)
+                if asdf == self.y:
+                    able = True
+                else:
+                    able = False
                 self.isJump=False
                 self.grav = 0
                 self.colli = False
-                able = False
+                
             else:
                 self.colli = True
-                able = True
+                
         for tile in tiles:
             if self.rect.colliderect(tile.rect):
                 pass
@@ -280,6 +286,7 @@ while run_lvl_1:
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
             bear.isJump = True
             bear.y-=1
+            able = False
     else:
         if bear.jumpCount >= bear.collision_1():
             bear.y -= (bear.jumpCount * abs(bear.jumpCount)) * 0.5
