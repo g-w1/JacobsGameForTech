@@ -28,6 +28,7 @@ gameover = True
 run_cutscene = True
 asdf = True
 able = True
+prev = False
 winscreen4 = True
 lvl_1 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
@@ -279,6 +280,7 @@ while run_lvl_1:
         bear.x -= bear.vel
     if keys[pygame.K_RIGHT] and bear.x < 500 - bear.vel - bear.width:  
         bear.x += bear.vel
+    prev = bear.isJump
     if bear.isJump==False: 
       
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
@@ -294,7 +296,7 @@ while run_lvl_1:
             bear.isJump = False
     if asdf == bear.y and bear.jumpCount:
         able = True
-    if asdf!= bear.y or (bear.jumpCount == 8 and bear.isJump == True):
+    if asdf!= bear.y or (prev != bear.isJump):
         able = False
     win.fill((50,0,200))
     for tile in tiles:
