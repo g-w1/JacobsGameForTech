@@ -438,8 +438,69 @@ while run_lvl_3:
     win.blit(ant1,(400,5))
     win.blit(textsurface,(300,0))
     pygame.display.update()
+tiles = []
+ant = player(2,300,ant1)
+for ypos in range(0,10):
+    for xpos in range(0,10):
+        if lvl_4[ypos][xpos]!= (0,):
+            tiles.append(Tile(50*xpos,50*ypos,lvl_4[ypos][xpos]))
+ant.rec = pygame.Rect((ant.x,ant.y,ant.width,ant.height))
+#game loop for level 4 start
+while run_lvl_4:
+    if ant.rec.colliderect(pygame.Rect(400,5,76,100)):
+            run_lvl_4=False
+    pygame.time.delay(frame_rate)
+    asdf = ant.y
+    ant.did_die()
+    ant.gravity(.1)
+    ant.collison()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run_start = False
+            run_inst = False
+            run_lvl_1 = False
+            run_lvl_2 = False
+            run_lvl_3 = False
+            run_lvl_4 = False
+            run_cutscene = False
+            gameover = False
+
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and ant.x > ant.vel: 
+        ant.x -= ant.vel
+    if keys[pygame.K_RIGHT] and ant.x < 500 - ant.vel - ant.width:  
+        ant.x += ant.vel
+    prev = ant.isJump
+    if ant.isJump==False: 
+      
+        if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
+            ant.isJump = True
+            ant.y-=1
+    else:
+        if ant.jumpCount >= ant.collision_1():
+            ant.y -= (ant.jumpCount * abs(ant.jumpCount)) * 0.5
+            ant.jumpCount -= 1
+        else: 
+            ant.jumpCount = 8
+            ant.jumpCountG = ant.jumpCount
+            ant.isJump = False
+    if asdf == ant.y and ant.jumpCount:
+        able = True
+    if asdf!= ant.y or (prev != ant.isJump):
+        able = False
+    win.fill((50,0,200))
+    for tile in tiles:
+        pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
+    win.blit(ant1,(ant.x,ant.y))
+    ant.did_die()
+    win.blit(monkey,(400,5))
+    win.blit(textsurface,(300,0))
+    pygame.display.update()
+#game loop for level 4 end
 #game loop for level 3 end
-if lion.health!=0 and bear.health!=0 and rhino.health!=0:
+if ant.health!=0 and bear.health!=0 and rhino.health!=0 and ant.health!=0:
     while winscreen4:
         win.blit(win_scr, (0,0))
         pygame.display.update()
