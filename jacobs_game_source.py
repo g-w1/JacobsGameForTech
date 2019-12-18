@@ -17,7 +17,7 @@ dirt = (101,86,81)
 bark = (167,158,143)
 lava = (247,176,66)
 sun = (243,194,13)
-platform = (1,136,85)
+platform = (5,199,100)
 run_start = True
 run_inst = True
 run_lvl_1 = True
@@ -30,6 +30,7 @@ asdf = True
 able = True
 prev = False
 winscreen4 = True
+run_cutscene_2 = True
 lvl_1 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
@@ -44,7 +45,7 @@ lvl_2 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,),leaf],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [(0,),(0,),platform,(0,),(0,),platform,(0,),(0,),bark,(0,)],
+         [(0,),(0,),(0,),(0,),(0,),platform,(0,),(0,),bark,(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),grass,grass],
@@ -53,7 +54,7 @@ lvl_2 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
 lvl_3 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
-        [(0,),(0,),(0,),(0,),(0,),platform,(0,),(0,),bark,(0,)],
+        [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
@@ -172,6 +173,7 @@ class player(object):
             global run_cutscene
             global gameover
             global run_cutscene
+            global run_cutscene_2
             run_start = False
             run_inst = False
             run_lvl_1 = False
@@ -181,6 +183,7 @@ class player(object):
             run_cutscene = False
             gameover = True
             run_cutscene = False
+            run_cutscene_2 = False
 class Tile(object):
     def __init__(self, xpos, ypos, rgb):
         self.x=xpos
@@ -205,6 +208,7 @@ while run_start:
             run_cutscene = False
             gameover = False
             winscreen4 = False
+            run_cutscene_2 = False
             break
     pressed_keys = pygame.key.get_pressed()
     win.fill((0,20,20))
@@ -225,6 +229,7 @@ while run_inst:
             run_cutscene = False
             gameover = False
             winscreen4 = False
+            run_cutscene_2 = False
             break
     pressed_keys = pygame.key.get_pressed()
     win.fill((0,20,20))
@@ -234,7 +239,7 @@ while run_inst:
     pygame.display.update()
 #cutscene
 while run_cutscene:
-    pygame.time.delay(100)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run_start = False
@@ -246,11 +251,15 @@ while run_cutscene:
             run_cutscene = False
             gameover = False
             winscreen4 = False
+            run_cutscene_2 = False
     pressed_key = pygame.key.get_pressed()
-    win.blit(cutscene,(0,0))
+    win.fill((255,255,255))
+    win.blit(cutscene,(0,100))
+
     if pressed_key[pygame.K_SPACE]:
         run_cutscene= False
     pygame.display.update()
+    pygame.time.delay(2000)
 #stuff for level 1
 bear = player(2,300,bear1)
 pygame.mixer.music.play(-1)
@@ -280,6 +289,7 @@ while run_lvl_1:
             run_cutscene = False
             gameover = False
             winscreen4 = False
+            run_cutscene_2 = False
 
 
     keys = pygame.key.get_pressed()
@@ -344,7 +354,7 @@ while run_lvl_2:
             run_cutscene = False
             gameover = False
             winscreen4 = False
-
+            run_cutscene_2 = False
 
     keys = pygame.key.get_pressed()
     
@@ -380,9 +390,10 @@ while run_lvl_2:
     win.blit(textsurface,(300,0))
     pygame.display.update()
 #game loop for level 2 end
-win.blit(cutscene_2,(1,1))
-pygame.display.update()
-pygame.time.delay(4000)
+if run_cutscene_2:
+    win.blit(cutscene_2,(0,0))
+    pygame.display.update()
+    pygame.time.delay(1700)
 #stuff for level 3
 lion.health = 3
 tiles = []
@@ -415,6 +426,7 @@ while run_lvl_3:
             run_cutscene = False
             gameover = False
             winscreen4 = False
+            run_cutscene_2 = False
     keys = pygame.key.get_pressed()
     
     if keys[pygame.K_LEFT] and lion.x > lion.vel: 
@@ -450,7 +462,7 @@ while run_lvl_3:
     pygame.display.update()
 #setup for level 4
 tiles = []
-ant = player(2,250,ant1)
+ant = player(52,250,ant1)
 for ypos in range(0,10):
     for xpos in range(0,10):
         if lvl_4[ypos][xpos]!= (0,):
@@ -477,6 +489,7 @@ while run_lvl_4:
             run_cutscene = False
             gameover = False
             winscreen4 = False
+            run_cutscene_2 = False
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and ant.x > ant.vel: 
@@ -501,7 +514,7 @@ while run_lvl_4:
         able = True
     if asdf!= ant.y or (prev != ant.isJump):
         able = False
-    win.fill((200,200,200))
+    win.fill((100,0,200))
     for tile in tiles:
         pygame.draw.rect(win, tile.rgb, (tile.x, tile.y, tile.width, tile.height))
     win.blit(ant1,(ant.x,ant.y))
@@ -526,6 +539,7 @@ if lion.health!=0 and bear.health!=0 and rhino.health!=0 and ant.health!=0:
                 run_cutscene = False
                 gameover = False
                 winscreen4 = False
+                run_cutscene_2 = False
 while gameover == True:
     win.blit(gameover1, (0,0))
     pygame.display.update()
@@ -539,4 +553,5 @@ while gameover == True:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
+            run_cutscene_2 = False
 pygame.quit()
