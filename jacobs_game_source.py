@@ -65,7 +65,7 @@ lvl_4 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),leaf,leaf,leaf],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
          [grass,(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
-         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
+         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),bark,(0,)],
         [(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [dirt,dirt,dirt,(0,),(0,),(0,),(0,),(0,),dirt,dirt],
@@ -82,6 +82,8 @@ ant1 = pygame.image.load("ant3.png").convert_alpha()
 lion1 = pygame.image.load("lion3.png").convert_alpha()
 cutscene2 = pygame.image.load("cutscene2.png").convert()
 win_scr = pygame.image.load("win_screen.png").convert()
+cutscene_2 = pygame.image.load("cutscene_2.png").convert()
+
 pygame.mixer.music.load("music.mp3")
 pygame.mixer.music.set_volume(0.5)
 
@@ -202,6 +204,7 @@ while run_start:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
+            winscreen4 = False
             break
     pressed_keys = pygame.key.get_pressed()
     win.fill((0,20,20))
@@ -221,6 +224,7 @@ while run_inst:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
+            winscreen4 = False
             break
     pressed_keys = pygame.key.get_pressed()
     win.fill((0,20,20))
@@ -241,6 +245,7 @@ while run_cutscene:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
+            winscreen4 = False
     pressed_key = pygame.key.get_pressed()
     win.blit(cutscene,(0,0))
     if pressed_key[pygame.K_SPACE]:
@@ -274,6 +279,7 @@ while run_lvl_1:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
+            winscreen4 = False
 
 
     keys = pygame.key.get_pressed()
@@ -337,6 +343,7 @@ while run_lvl_2:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
+            winscreen4 = False
 
 
     keys = pygame.key.get_pressed()
@@ -373,6 +380,9 @@ while run_lvl_2:
     win.blit(textsurface,(300,0))
     pygame.display.update()
 #game loop for level 2 end
+win.blit(cutscene_2,(1,1))
+pygame.display.update()
+pygame.time.delay(4000)
 #stuff for level 3
 lion.health = 3
 tiles = []
@@ -404,7 +414,7 @@ while run_lvl_3:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
-
+            winscreen4 = False
     keys = pygame.key.get_pressed()
     
     if keys[pygame.K_LEFT] and lion.x > lion.vel: 
@@ -466,7 +476,7 @@ while run_lvl_4:
             run_lvl_4 = False
             run_cutscene = False
             gameover = False
-
+            winscreen4 = False
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and ant.x > ant.vel: 
