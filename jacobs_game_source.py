@@ -1,9 +1,9 @@
 #module setup
 import pygame, os, sys
-pygame.mixer.pre_init(44100,16,2,4096)    
+pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
 pygame.font.init()
-#variable setup        
+#variable setup
 myfont = pygame.font.SysFont('Comic Sans MS', 30)
 textsurface = myfont.render('Save Me', False, (0, 0, 0))
 frame_rate = 25
@@ -71,21 +71,20 @@ lvl_4 = [[(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),(0,),sun],
          [grass, grass,grass,(0,),(0,),(0,),(0,),(0,),(0,),(0,)],
          [dirt,dirt,dirt,(0,),(0,),(0,),(0,),(0,),dirt,dirt],
          [dirt,dirt,dirt,lava,lava,lava,lava,lava,dirt,dirt]]
-monkey = pygame.image.load("monkey3.png").convert_alpha()
-bear1 = pygame.image.load("beargd2.png").convert_alpha()
-start_screen = pygame.image.load("startscreen.png").convert()
-instructions = pygame.image.load("instructions.png").convert()
-cutscene = pygame.image.load("cutscene2.png").convert()
-heart = pygame.image.load("heart3.png").convert_alpha()
-gameover1 = pygame.image.load("gameover.png").convert()
-rhino1 = pygame.image.load("rhino3.png").convert_alpha()
-ant1 = pygame.image.load("ant3.png").convert_alpha()
-lion1 = pygame.image.load("lion3.png").convert_alpha()
-cutscene2 = pygame.image.load("cutscene2.png").convert()
-win_scr = pygame.image.load("win_screen.png").convert()
-cutscene_2 = pygame.image.load("cutscene_2.png").convert()
-
-pygame.mixer.music.load("music.mp3")
+monkey = pygame.image.load("assets/monkey3.png").convert_alpha()
+bear1 = pygame.image.load("assets/beargd2.png").convert_alpha()
+start_screen = pygame.image.load("assets/startscreen.png").convert()
+instructions = pygame.image.load("assets/instructions.png").convert()
+cutscene = pygame.image.load("assets/cutscene2.png").convert()
+heart = pygame.image.load("assets/heart3.png").convert_alpha()
+gameover1 = pygame.image.load("assets/gameover.png").convert()
+rhino1 = pygame.image.load("assets/rhino3.png").convert_alpha()
+ant1 = pygame.image.load("assets/ant3.png").convert_alpha()
+lion1 = pygame.image.load("assets/lion3.png").convert_alpha()
+cutscene2 = pygame.image.load("assets/cutscene2.png").convert()
+win_scr = pygame.image.load("assets/win_screen.png").convert()
+cutscene_2 = pygame.image.load("assets/cutscene_2.png").convert()
+pygame.mixer.music.load("assets/music.mp3")
 pygame.mixer.music.set_volume(0.5)
 
 #class setup
@@ -113,7 +112,6 @@ class player(object):
     def collison(self):
         global tiles
         global able
-        global adsf
         self.rec = pygame.Rect(self.x,self.y,self.width,self.height)
         for tile in tiles:
             if self.rec.colliderect(pygame.Rect(tile.x,tile.y-1,50,51)):
@@ -128,10 +126,10 @@ class player(object):
                 self.isJump=False
                 self.grav = 0
                 self.colli = False
-                
+
             else:
                 self.colli = True
-                
+
         for tile in tiles:
             if self.rect.colliderect(tile.rect):
                 pass
@@ -143,10 +141,6 @@ class player(object):
         global able
         if colli == False and self.isJump == False:
             self.y -= self.velo
-            #able = False
-            
-            '''if self.velo<=25:
-                self.velo -= accel'''
     def did_die(self):
         if self.y>=405:
             self.x=2
@@ -293,13 +287,13 @@ while run_lvl_1:
 
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and bear.x > bear.vel: 
+    if keys[pygame.K_LEFT] and bear.x > bear.vel:
         bear.x -= bear.vel
-    if keys[pygame.K_RIGHT] and bear.x < 500 - bear.vel - bear.width:  
+    if keys[pygame.K_RIGHT] and bear.x < 500 - bear.vel - bear.width:
         bear.x += bear.vel
     prev = bear.isJump
-    if bear.isJump==False: 
-      
+    if bear.isJump==False:
+
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
             bear.isJump = True
             bear.y-=1
@@ -307,7 +301,7 @@ while run_lvl_1:
         if bear.jumpCount >= bear.collision_1():
             bear.y -= (bear.jumpCount * abs(bear.jumpCount)) * 0.5
             bear.jumpCount -= 1
-        else: 
+        else:
             bear.jumpCount = 8
             bear.jumpCountG = bear.jumpCount
             bear.isJump = False
@@ -357,15 +351,15 @@ while run_lvl_2:
             run_cutscene_2 = False
 
     keys = pygame.key.get_pressed()
-    
-    if keys[pygame.K_LEFT] and rhino.x > rhino.vel: 
+
+    if keys[pygame.K_LEFT] and rhino.x > rhino.vel:
         rhino.x -= rhino.vel
 
-    if keys[pygame.K_RIGHT] and rhino.x < 500 - rhino.vel - rhino.width:  
+    if keys[pygame.K_RIGHT] and rhino.x < 500 - rhino.vel - rhino.width:
         rhino.x += rhino.vel
-        
-    if rhino.isJump==False: 
-      
+
+    if rhino.isJump==False:
+
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able:
             rhino.isJump = True
             rhino.y-=1
@@ -373,7 +367,7 @@ while run_lvl_2:
         if rhino.jumpCount >= rhino.collision_1():
             rhino.y -= (rhino.jumpCount * abs(rhino.jumpCount)) * 0.5
             rhino.jumpCount -= 1
-        else: 
+        else:
             rhino.jumpCount = 8
             rhino.jumpCountG = rhino.jumpCount
             rhino.isJump = False
@@ -428,15 +422,15 @@ while run_lvl_3:
             winscreen4 = False
             run_cutscene_2 = False
     keys = pygame.key.get_pressed()
-    
-    if keys[pygame.K_LEFT] and lion.x > lion.vel: 
+
+    if keys[pygame.K_LEFT] and lion.x > lion.vel:
         lion.x -= rhino.vel
 
-    if keys[pygame.K_RIGHT] and lion.x < 500 - lion.vel - lion.width:  
+    if keys[pygame.K_RIGHT] and lion.x < 500 - lion.vel - lion.width:
         lion.x += lion.vel
-        
-    if lion.isJump==False: 
-      
+
+    if lion.isJump==False:
+
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able:
             lion.isJump = True
             lion.y-=1
@@ -444,7 +438,7 @@ while run_lvl_3:
         if lion.jumpCount >= lion.collision_1():
             lion.y -= (lion.jumpCount * abs(lion.jumpCount)) * 0.5
             lion.jumpCount -= 1
-        else: 
+        else:
             lion.jumpCount = 8
             lion.jumpCountG = lion.jumpCount
             lion.isJump = False
@@ -492,13 +486,13 @@ while run_lvl_4:
             run_cutscene_2 = False
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and ant.x > ant.vel: 
+    if keys[pygame.K_LEFT] and ant.x > ant.vel:
         ant.x -= ant.vel
-    if keys[pygame.K_RIGHT] and ant.x < 500 - ant.vel - ant.width:  
+    if keys[pygame.K_RIGHT] and ant.x < 500 - ant.vel - ant.width:
         ant.x += ant.vel
     prev = ant.isJump
-    if ant.isJump==False: 
-      
+    if ant.isJump==False:
+
         if (keys[pygame.K_UP] | keys[pygame.K_SPACE]) and able == True:
             ant.isJump = True
             ant.y-=1
@@ -506,7 +500,7 @@ while run_lvl_4:
         if ant.jumpCount >= ant.collision_1():
             ant.y -= (ant.jumpCount * abs(ant.jumpCount)) * 0.5
             ant.jumpCount -= 1
-        else: 
+        else:
             ant.jumpCount = 8
             ant.jumpCountG = ant.jumpCount
             ant.isJump = False
